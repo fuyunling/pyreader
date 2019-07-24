@@ -13,17 +13,6 @@ def preparetext(lines):
         text = text.replace('\n' + s, s)
     text = text.replace('\n\n', '\n')
 
-    '''
-    text = text.replace('。', '。\n')
-    text = text.replace('！', '！\n')
-    text = text.replace('？', '？\n')
-    text = text.replace('：', '：\n')
-    text = text.replace('”', '”\n')
-    text = text.replace('\n”', '”')
-    text = text.replace('\n？', '？')
-    text = text.replace('\n！', '！')
-    text = text.replace('\n\n', '\n')
-    '''
     return text.splitlines()
 
 def readlog(logf):
@@ -112,12 +101,6 @@ goon = True
 while(goon):
     print('\n找到以下书籍：\n%s\n%s\n%s' % 
         (sign, ''.join(map(lambda n: '\n\t%d. %s\n' % (novel.index(n) + 1, n), novel)), sign))
-    #print('找到以下书籍：\n%s\n' % sign)
-    #i = 1
-    #for n in novel:
-    #    print('\t%d. %s\n' % (i, n))
-    #    i = i + 1
-    #print(sign)
 
     select = int(input('想听哪本书？(输入序号即可，输入“0”朗读最近的书籍，其它输入或序号超范围都将终止程序 :-P) > '))
     goon = False
@@ -132,8 +115,6 @@ while(goon):
 
 nn = novel[select - 1] if renn is '' else renn
 print('\n已选择：\n%s\n\n\t%s\n\n%s' % (sign, nn, sign))
-#nn = '《百炼成仙》（校对版全本）作者：幻雨'
-#nn = '《天域苍穹》（校对版全本）作者：风凌天下'
 
 fn = path.extsep.join([nn, 'txt'])
 logfile = path.extsep.join([nn, 'log'])
@@ -144,7 +125,6 @@ try:
 except UnicodeDecodeError:
     with open(fn, 'r', encoding='utf-8') as f:
         lines = f.readlines()
-#lines = preparetext(lines)
 
 
 sapi_voices = {
@@ -159,7 +139,6 @@ rate = 174
 engine = pyttsx3.init()
 engine.setProperty('rate', rate)
 engine.setProperty('voice', sapi_voices[reader])
-#print(str(engine.getProperty('rate')), ' --- ', engine.getProperty('voice'))    # not getting what I expected
 
 idx, sub = 1, ''
 if path.exists(logfile):
@@ -191,20 +170,6 @@ while (goon):
         i = int(input('\n请输入章节序号 > '))
         chs = findchapters(lines, '第%d章' % i)
         i = pickone(chs, '章节')
-        '''
-        if len(chs) > 1:
-            print('\n找到以下章节：%s' % 
-                ''.join(map(lambda k: '\n\n\t%d, %s' % (k, chs[k][1].strip()), chs)))
-            i = int(input('\n选择哪个 > '))
-            print('\n已选择：\n\t%s' % chs[i][1])
-            i = chs[i][0]
-        elif len(chs) == 1:
-            print(chs)
-            i = chs[1][0]    # key starts from 1
-        else: 
-            print('\n找不到指定章节……')
-            exit()
-        '''
     elif (5 == select):
         content = input('\n请输入要定位的文本 > ')
         linefinded = findcontent(lines, content)
