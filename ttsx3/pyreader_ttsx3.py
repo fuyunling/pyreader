@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import pyttsx3
-from os import path
-from os import listdir
+from os import path, listdir
 
 def preparetext(lines):
     text = ''.join(lines)
